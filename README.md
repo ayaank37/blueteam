@@ -3,6 +3,6 @@ Blue team project
 
 Edit names here:
 Ishita Mathur
-(add name here)
+Seamus Maloney
 (add name here)
 (add name here)
