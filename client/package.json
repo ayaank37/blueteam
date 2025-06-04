@@ -1,7 +1,7 @@
 {
-  "name": "client",
+  "name": "blueteam",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -26,5 +26,13 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "vite": "^6.3.5"
-  }
+  },
+  "description": "BlueTeam Coder Pro Team Project",
+  "main": "\t",
+  "repository": {
+    "type": "git",
+    "url": "\t"
+  },
+  "author": "",
+  "license": "ISC"
 }

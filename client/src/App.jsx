@@ -1,18 +1,15 @@
-import './App.css'
-import Button from '@mui/material/Button';
-import Level from './Components/Level';
+// src/App.jsx
+import React from "react";
+import LevelsPage from "./Pages/LevelsPage"; // <-- notice "./Pages/LevelsPage"
+import Level from "./Components/Level";
+import Button from "@mui/material/Button";
 
 function App() {
-
-
   return (
-    <>
-      <div>
-        <Level></Level>
-       <Button variant='contained'>StickManCoding</Button>
-      </div>
-    </>
-  )
+    <div>
+      <LevelsPage></LevelsPage>
+    </div>
+  );
 }
 
-export default App
+export default App;
