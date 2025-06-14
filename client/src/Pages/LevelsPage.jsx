@@ -1,37 +1,48 @@
-
 import React from "react";
 
-export default function LevelsPage() {
-  // Base styles
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import { Typography } from "@mui/material";
+
+
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: (theme.vars ?? theme).palette.text.secondary,
+  ...theme.applyStyles('dark', {
+    backgroundColor: '#1A2027',
+  }),
+}));
+
+
+export default function LevelsPage({ columns = 4 }) {
   const pageStyle = {
     maxWidth: "800px",
     margin: "0 auto",
-    padding: "20px",
+    padding: "20px 0",
     fontFamily: "Arial, sans-serif",
+   
   };
 
   const headerStyle = {
-    backgroundColor: "#d1d5db", // light gray
+    backgroundColor: "#d1d5db", 
     padding: "20px 0",
     textAlign: "center",
     borderRadius: "4px",
-    height: "50px",
-    width: "2000px"
+    height: "100px",
+    width: "2060px"
   };
 
   const headerText = {
     margin: 0,
     fontSize: "2.5rem",
     color: "#ffffff",
-  };
-
-  const gridStyle = {
-    display: "grid",
-    gridTemplateColumns: "repeat(4, 1fr)",
-    gridTemplateRows: "repeat(2, 1fr)",
-    gap: "100px",
-    margin: "60px",
-
   };
 
   const boxBase = {
@@ -59,27 +70,32 @@ export default function LevelsPage() {
   ];
 
   return (
-    <div style={pageStyle}>
+    <Container maxWidth="lg"  align="center">
       {/* Header Bar */}
-      <div style={headerStyle}>
-        <h1 style={headerText}>Levels</h1>
-      </div>
+      <Typography variant="h1" gutterBottom align={"center"}>
+        Levels
+      </Typography>
 
-      {/* 4×2 Grid of Level Boxes */}
-      <div style={gridStyle}>
+      <Grid
+        container
+        spacing={4}
+        justifyContent="center" 
+        sx={{ padding: '60px', marginTop: '20px' }}
+      >
         {levels.map((level) => (
-          <div
-            key={level.label}
-            style={{
-              ...boxBase,
-              backgroundColor: level.bg,
-              color: level.txt,
-            }}
-          >
-            {level.label}
-          </div>
+          <Grid item size={3} xs={4} key={level.label} display={"flex"}>
+            <Box
+              sx={{
+                ...boxBase,
+                backgroundColor: level.bg,
+                color: level.txt,
+              }}
+            >
+              {level.label}
+            </Box>
+          </Grid>
         ))}
-      </div>
-    </div>
+      </Grid>
+    </Container>
   );
 }
