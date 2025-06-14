@@ -47,7 +47,7 @@ export default function LevelsPage({ columns = 4 }) {
 
   const boxBase = {
     height: "275px",
-    width: "400px",
+    width: "200px",
     borderRadius: "24px",
     display: "flex",
     alignItems: "center",
@@ -78,12 +78,13 @@ export default function LevelsPage({ columns = 4 }) {
 
       <Grid
         container
-        spacing={4}
         justifyContent="center" 
         sx={{ padding: '60px', marginTop: '20px' }}
       >
         {levels.map((level) => (
-          <Grid item size={3} xs={4} key={level.label} display={"flex"}>
+          <Grid item size={3} xs={4} key={level.label} display={"flex"} flexDirection={"column"}>
+            
+            <Typography>{level.label} </Typography>
             <Box
               sx={{
                 ...boxBase,
@@ -91,7 +92,7 @@ export default function LevelsPage({ columns = 4 }) {
                 color: level.txt,
               }}
             >
-              {level.label}
+              
             </Box>
           </Grid>
         ))}
