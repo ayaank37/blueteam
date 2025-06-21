@@ -6,6 +6,7 @@ import AccountPage from './Pages/AccountPage';
 import LoginPage from './Pages/LoginPage';
 import LevelsPage from './Pages/LevelsPage';
 import RewardsPage from './Pages/RewardsPage';
+import GamePage from './Pages/GamePage'; // ✅ ADD THIS LINE
 
 import { GameBucksProvider } from './Components/GameBucksContext';
 
@@ -14,37 +15,35 @@ function App() {
     <Router>
       <GameBucksProvider>
         <nav
-          style={{
-            backgroundColor: '#333',
-            padding: '10px 20px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            height: '60px',
-            boxSizing: 'border-box',
-          }}
-        >
-          <div style={{ flex: 1 }}>
-            <Link to="/" style={{ color: 'white', textDecoration: 'none', fontSize: '20px' }}>
-              Home
-            </Link>
-          </div>
-          <div style={{ flex: 1, textAlign: 'center' }}>
-            <Link to="/levels" style={{ color: 'white', textDecoration: 'none', fontSize: '20px' }}>
-              Levels
-            </Link>
-          </div>
-          <div style={{ flex: 1, textAlign: 'center' }}>
-            <Link to="/rewards" style={{ color: 'white', textDecoration: 'none', fontSize: '20px' }}>
-              Rewards
-            </Link>
-          </div>
-          <div style={{ flex: 1, textAlign: 'right' }}>
-            <Link to="/account" style={{ color: 'white', textDecoration: 'none', fontSize: '20px' }}>
-              Account
-            </Link>
-          </div>
-        </nav>
+  style={{
+    backgroundColor: '#1a1a1a',
+    padding: '10px 20px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    height: '60px',
+    boxSizing: 'border-box',
+  }}
+>
+  {['/', '/levels', '/game', '/rewards', '/account'].map((path, i) => {
+    const labels = ['Home', 'Levels', 'Game', 'Rewards', 'Account'];
+    return (
+      <Link
+        key={path}
+        to={path}
+        style={{
+          color: 'white',
+          textDecoration: 'none',
+          fontSize: '20px',
+          fontWeight: '500',
+        }}
+      >
+        {labels[i]}
+      </Link>
+    );
+  })}
+</nav>
+
 
         <div style={{ height: 'calc(100vh - 60px)', width: '100vw', overflowY: 'auto' }}>
           <Routes>
@@ -53,6 +52,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/levels" element={<LevelsPage />} />
             <Route path="/rewards" element={<RewardsPage />} />
+            <Route path="/game" element={<GamePage />} />
           </Routes>
         </div>
       </GameBucksProvider>
