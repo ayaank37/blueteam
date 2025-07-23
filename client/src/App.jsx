@@ -6,10 +6,8 @@ import AccountPage from './Pages/AccountPage';
 import LoginPage from './Pages/LoginPage';
 import LevelsPage from './Pages/LevelsPage';
 import RewardsPage from './Pages/RewardsPage';
-<<<<<<< Updated upstream
-=======
 import GamePage from './Pages/GamePage';
->>>>>>> Stashed changes
+
 
 import { GameBucksProvider } from './Components/GameBucksContext';
 
