@@ -1,9 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useGameBucks } from '../Components/GameBucksContext';
-import LoginButton from '../Components/LoginButton';
+import Button from '@mui/material/Button';
 
 const AccountPage = () => {
   const { gameBucks } = useGameBucks();
+  const [username, setUsername] = useState('');
+  const [level, setLevel] = useState(1); // default level 1
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    if (!storedUsername) {
+      navigate('/login');
+    } else {
+      setUsername(storedUsername);
+    }
+
+    // Get current unlocked level from localStorage (or default 1)
+    const unlockedLevels = Number(localStorage.getItem('unlockedLevels') || '1');
+    setLevel(unlockedLevels);
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('username');
+    navigate('/login');
+  };
 
   return (
     <div
@@ -34,6 +56,10 @@ const AccountPage = () => {
         }}
       >
         Account Page
+      </div>
+
+      <div style={{ color: '#ccc', fontSize: '1.5rem' }}>
+        Welcome, <strong>{username}</strong>!
       </div>
 
       <div
@@ -90,12 +116,18 @@ const AccountPage = () => {
         </div>
 
         <div style={{ textAlign: 'center' }}>
-          <h1 style={{ marginBottom: '30px', fontSize: '3rem' }}>Level: 3</h1>
+          <h1 style={{ marginBottom: '30px', fontSize: '3rem' }}>Level: {level}</h1>
           <h1 style={{ fontSize: '3rem' }}>GameBucks: {gameBucks}</h1>
         </div>
       </div>
 
-      <LoginButton />
+      <Button
+        variant="contained"
+        onClick={handleLogout}
+        style={{ backgroundColor: '#dc3545' }}
+      >
+        Log Out
+      </Button>
     </div>
   );
 };

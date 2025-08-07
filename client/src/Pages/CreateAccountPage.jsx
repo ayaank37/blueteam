@@ -1,29 +1,29 @@
+// src/pages/CreateAccountPage.jsx
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+const CreateAccountPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleCreateAccount = (e) => {
     e.preventDefault();
 
+    // Check if user already exists
     const existingUsers = JSON.parse(localStorage.getItem('users')) || {};
-
-    if (!existingUsers[username]) {
-      alert('Username does not exist');
+    if (existingUsers[username]) {
+      alert('Username already exists. Please choose another.');
       return;
     }
 
-    if (existingUsers[username] !== password) {
-      alert('Incorrect password');
-      return;
-    }
+    // Save user
+    existingUsers[username] = password;
+    localStorage.setItem('users', JSON.stringify(existingUsers));
 
-    localStorage.setItem('username', username);
-    navigate('/account');
+    alert('Account created! You can now log in.');
+    navigate('/login');
   };
 
   return (
@@ -37,7 +37,7 @@ const LoginPage = () => {
       padding: '20px',
       boxSizing: 'border-box',
     }}>
-      <form onSubmit={handleSubmit} style={{
+      <form onSubmit={handleCreateAccount} style={{
         display: 'flex',
         flexDirection: 'column',
         gap: '20px',
@@ -46,11 +46,11 @@ const LoginPage = () => {
         borderRadius: '8px',
         width: '320px',
       }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '10px' }}>Log In</h2>
+        <h2 style={{ textAlign: 'center', marginBottom: '10px' }}>Create Account</h2>
 
         <input
           type="text"
-          placeholder="Username"
+          placeholder="Choose a Username"
           value={username}
           onChange={e => setUsername(e.target.value)}
           required
@@ -65,7 +65,7 @@ const LoginPage = () => {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Choose a Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
@@ -78,18 +78,12 @@ const LoginPage = () => {
           }}
         />
 
-        <Button type="submit" variant="contained" style={{ backgroundColor: '#007bff' }}>
-          Log In
-        </Button>
-        <Button
-          onClick={() => navigate('/create-account')}
-          style={{ color: '#ccc', textTransform: 'none', marginTop: '10px' }}
-        >
-          Don’t have an account? Create one
+        <Button type="submit" variant="contained" style={{ backgroundColor: '#28a745' }}>
+          Create Account
         </Button>
       </form>
     </div>
   );
 };
 
-export default LoginPage;
+export default CreateAccountPage;
