@@ -7,6 +7,7 @@ import LoginPage from "./Pages/LoginPage";
 import LevelsPage from "./Pages/LevelsPage";
 import RewardsPage from "./Pages/RewardsPage";
 import GamePage from "./Pages/GamePage";
+import CreateAccountPage from "./Pages/CreateAccountPage";
 
 import { GameBucksProvider } from "./Components/GameBucksContext";
 
@@ -70,6 +71,7 @@ function App() {
               <Route path="/levels" element={<LevelsPage />} />
               <Route path="/rewards" element={<RewardsPage />} />
               <Route path="/game/:levelId" element={<GamePage />} />
+              <Route path="/create-account" element={<CreateAccountPage />} />
             </Routes>
           </div>
         </div>
