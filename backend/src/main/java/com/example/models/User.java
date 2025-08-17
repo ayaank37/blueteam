@@ -1,4 +1,6 @@
 package com.example.models;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 
 @Entity
@@ -26,19 +28,19 @@ public class User {
         this.password = password;
     }
 
-    public Integer get userId() {
+    public Integer getUserId() {
         return userId;
     }
 
     public void setUserId( Integer userId) {
-        this.userId = userId
+        this.userId = userId;
     }
 
-    public String getUsername(); {
+    public String getUsername() {
         return username;
     }
 
-     public void setUsername( String username); {
+     public void setUsername( String username) {
         this.username = username;
     }
 
