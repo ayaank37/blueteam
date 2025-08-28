@@ -10,6 +10,7 @@ import level5 from "../assets/Level5.png";
 import level6 from "../assets/Level6.gif";
 import level7 from "../assets/Level7.jpg";
 import level8 from "../assets/Level8.jpg";
+import archer from "../assets/archer.png";
 
 const MAX_HEARTS = 5;
 
@@ -187,7 +188,17 @@ const GamePage = () => {
           </div>
           <div style={{ marginBottom: "10px", fontWeight: "bold" }}>You</div>
           <div style={{ fontSize: "1.2rem", marginBottom: "20px" }}>{renderHearts(playerHearts)}</div>
-          <div style={{ fontSize: "80px" }}>🧑‍💻</div>
+          <img 
+  src={archer} 
+  alt="Player" 
+  style={{ 
+    width: "200px", 
+    height: "200px", 
+    objectFit: "contain", 
+    margin: "0 auto" 
+  }} 
+/>
+
         </div>
         <div style={{ textAlign: "center" }}>
           <div
