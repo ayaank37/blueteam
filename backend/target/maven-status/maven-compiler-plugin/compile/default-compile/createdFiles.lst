@@ -1,2 +1,10 @@
+<<<<<<< Updated upstream
 com/example/models/User.class
 UserRoute.class
+=======
+com/example/controller/UserController.class
+com/example/MyApplication.class
+com/example/model/User.class
+UserRoute.class
+com/example/repository/UserRepository.class
+>>>>>>> Stashed changes
