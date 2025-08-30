@@ -1,24 +1,11 @@
 //example (add more later)
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
-<<<<<<< Updated upstream
-import com.example.models.User;
-=======
 import com.example.model.User;
->>>>>>> Stashed changes
 
 @RestController
 @RequestMapping("/users")
 public class UserRoute {
-<<<<<<< Updated upstream
-    // GET /users
-    @GetMapping
-    public List<User> getAllUsers() {
-        System.out.print("helloooo Worlddddd");
-        return null;
-    }
-}
-=======
 
     // Dummy in-memory user list
     private List<User> users = new ArrayList<>(Arrays.asList(
@@ -57,4 +44,3 @@ public class UserRoute {
         users.removeIf(user -> user.getUsername().equals(username));
     }
 }
->>>>>>> Stashed changes
