@@ -43,8 +43,15 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-   public void increaseLevel( ) {
-    level ++;
+    public Integer getLevel() {
+    return level;
+}
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+    public void increaseLevel( ) {
+        level ++;
 
    }
 
