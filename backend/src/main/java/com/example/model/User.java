@@ -1,7 +1,6 @@
 package com.example.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
->>>>>>> Stashed changes:backend/src/main/java/com/example/model/User.java
 
 @Document(collection = "users")
 public class User {
@@ -27,14 +26,6 @@ public class User {
         this.level = level;
         this.username = username;
         this.password = password;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId( Integer userId) {
-        this.userId = userId;
     }
 
     public String getUsername() {

@@ -1,4 +1,4 @@
-//example (add more later)
+package com.example.controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import com.example.model.User;
