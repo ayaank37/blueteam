@@ -25,7 +25,7 @@ const levels = [
 ];
 
 const GamePage = () => {
-  const { gameBucks, setGameBucks } = useGameBucks();
+  const { gameBucks, setGameBucks, extraHearts } = useGameBucks();
   const { levelId } = useParams();
   const navigate = useNavigate();
   const levelIndex = parseInt(levelId, 10) - 1;
@@ -33,12 +33,17 @@ const GamePage = () => {
   const level = levels[levelIndex] || levels[0];
   const levelQuestions = questionBank[levelIndex] || [];
 
-  const [playerHearts, setPlayerHearts] = useState(MAX_HEARTS);
+  const [playerHearts, setPlayerHearts] = useState(MAX_HEARTS + extraHearts);
   const [monsterHearts, setMonsterHearts] = useState(MAX_HEARTS);
   const [feedback, setFeedback] = useState("");
   const [userInput, setUserInput] = useState("");
   const [usedIndices, setUsedIndices] = useState([]);
   const [question, setQuestion] = useState(null);
+
+  // Update player hearts if extraHearts changes
+  useEffect(() => {
+    setPlayerHearts(MAX_HEARTS + extraHearts);
+  }, [extraHearts]);
 
   const renderHearts = (count) => "❤️ ".repeat(count).trim();
 
@@ -61,7 +66,7 @@ const GamePage = () => {
 
   useEffect(() => {
     loadNextQuestion();
-    setPlayerHearts(MAX_HEARTS);
+    setPlayerHearts(MAX_HEARTS + extraHearts);
     setMonsterHearts(MAX_HEARTS);
     setFeedback("");
     setUserInput("");
