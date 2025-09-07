@@ -8,22 +8,23 @@ import com.example.model.User;
 public class UserRoute {
 
     // Dummy in-memory user list
-    private List<User> users = new ArrayList<>(Arrays.asList(
-        new User( "Alice", "alicepassword"),
-        new User( "Bob", "bobpassword")
-    ));
-
+    //private List<User> users = new ArrayList<>(Arrays.asList(
+    //    new User( "Alice", "alicepassword"),
+    //    new User( "Bob", "bobpassword")
+    //));
+    @Autowired
+    private UserRepository database;
+    
     // GET /users
     @GetMapping
     public List<User> getAllUsers() {
-        return users;
+        return database.findAll();
     }
 
     // POST /users
     @PostMapping
     public User createUser(@RequestBody User newUser) {
-        users.add(newUser);
-        return newUser;
+        return database.save(newUser);
     }
 
     // PUT /users/
@@ -37,10 +38,17 @@ public class UserRoute {
      }
     return null;
 }
+     //put level
+    // @PutMapping("/{username}/levelup")
+    //  public User updateUser(@PathVariable String username) {
+   // return username;
+   //  }
+      
+
 
     // DELETE /users/
     @DeleteMapping("/{username}")
     public void deleteUser(@PathVariable String username) {
-        users.removeIf(user -> user.getUsername().equals(username));
+        database.removeIf(user -> user.getUsername().equals(username));
     }
 }
