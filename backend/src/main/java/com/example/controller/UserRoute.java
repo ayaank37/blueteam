@@ -23,7 +23,7 @@ public class UserRoute {
     public List<User> getAllUsers() {
         return database.findAll();
     }
-
+ 
     // POST /users
     @PostMapping
     public User createUser(@RequestBody User newUser) {

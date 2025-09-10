@@ -55,7 +55,7 @@ public class User {
     public void increaseLevel( ) {
         level ++;
 
-   }
+   } 
   public void setGamebucks(Integer gamebucks) {
         this.gamebucks = gamebucks;
     }
