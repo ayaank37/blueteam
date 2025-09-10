@@ -2,6 +2,7 @@ package com.example.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+
 @Document(collection = "users")
 public class User {
 
@@ -12,6 +13,7 @@ public class User {
     private String username;
     private String password;
     private Integer level = 0;
+    private Integer gamebucks = 0;
     
     public User() {
 
@@ -54,7 +56,9 @@ public class User {
         level ++;
 
    }
-
-
+  public void setGamebucks(Integer gamebucks) {
+        this.gamebucks = gamebucks;
+    }
+  
 
 }
