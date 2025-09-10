@@ -59,6 +59,10 @@ public class User {
   public void setGamebucks(Integer gamebucks) {
         this.gamebucks = gamebucks;
     }
+
+    public Integer getGamebucks() {
+    return gamebucks;
+}
   
 
 }

@@ -1,17 +1,20 @@
 package com.example.controller;
-import org.springframework.web.bind.annotation.*;
+
 import java.util.*;
 import com.example.model.User;
+import com.example.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
 public class UserRoute {
 
-    // Dummy in-memory user list
-    //private List<User> users = new ArrayList<>(Arrays.asList(
-    //    new User( "Alice", "alicepassword"),
-    //    new User( "Bob", "bobpassword")
-    //));
+    
     @Autowired
     private UserRepository database;
     
@@ -27,28 +30,39 @@ public class UserRoute {
         return database.save(newUser);
     }
 
-    // PUT /users/
-    @PutMapping("/{username}")
-    public User updateUser(@PathVariable String username, @RequestBody User updatedUser) {
-     for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                user.setPassword(updatedUser.getPassword());
-                return user;
-           }
-     }
-    return null;
-}
-     //put level
-    // @PutMapping("/{username}/levelup")
-    //  public User updateUser(@PathVariable String username) {
-   // return username;
-   //  }
+   
+@PutMapping("/{username}")
+    public ResponseEntity<User> updateUser(@PathVariable String username, @RequestBody User updatedUser) {
+        Optional<User> optionalUser = database.findByUsername(username);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setPassword(updatedUser.getPassword());  // You can update more fields here if needed
+            return ResponseEntity.ok(database.save(user));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+  @PutMapping("/{username}/levelup")
+    public ResponseEntity<User> levelUpUser(@PathVariable String username) {
+        Optional<User> optionalUser = database.findByUsername(username);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.increaseLevel();  // Custom method in User model
+            return ResponseEntity.ok(database.save(user));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
       
 
-
-    // DELETE /users/
     @DeleteMapping("/{username}")
-    public void deleteUser(@PathVariable String username) {
-        database.removeIf(user -> user.getUsername().equals(username));
+    public ResponseEntity<Void> deleteUser(@PathVariable String username) {
+        Optional<User> optionalUser = database.findByUsername(username);
+        if (optionalUser.isPresent()) {
+            database.deleteByUsername(username);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
