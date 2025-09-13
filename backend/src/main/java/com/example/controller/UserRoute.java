@@ -37,6 +37,25 @@ public class UserRoute {
                     .body("Username already exists");
         }
     }
+    @PostMapping("/login")
+public ResponseEntity<String> loginUser(@RequestBody User newUser) {
+    Optional<User> optionalUser = database.findByUsername(newUser.getUsername());
+
+    if (optionalUser.isEmpty()) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("User not found");
+    }
+
+    User existingUser = optionalUser.get();
+
+    if (!existingUser.getPassword().equals(newUser.getPassword())) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body("Invalid password");
+    }
+
+    return ResponseEntity.ok("Login successful");
+}
+
 
     // PUT /users/{username}
     @PutMapping("/{username}")
