@@ -2,7 +2,7 @@ import bgImage from "../assets/blue background.jpeg";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Typography, Grid, Box } from "@mui/material";
-import level1 from "../assets/Level1.avif";
+import level1 from "../assets/OfficialLevel1.png";
 import level2 from "../assets/Level2.jpg";
 import level3 from "../assets/Level3.jpg";
 import level4 from "../assets/Level4.webp";

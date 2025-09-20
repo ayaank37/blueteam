@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useGameBucks } from "../Components/GameBucksContext";
 import { questionBank } from "../data/QuestionBank";
-import level1 from "../assets/Level1.avif";
+import level1 from "../assets/OfficialLevel1.png";
 import level2 from "../assets/Level2.jpg";
 import level3 from "../assets/Level3.jpg";
 import level4 from "../assets/Level4.webp";
@@ -10,6 +10,7 @@ import level5 from "../assets/Level5.png";
 import level6 from "../assets/Level6.gif";
 import level7 from "../assets/Level7.jpg";
 import level8 from "../assets/Level8.jpg";
+import { useRef } from "react";
 
 const MAX_HEARTS = 5;
 
@@ -124,6 +125,71 @@ const GamePage = () => {
     navigate("/levels");
   };
 
+  const canvasRef = useRef(null);
+  const animRef = useRef({ frame: 0, last: 0, req: 0 });
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const sprite = new Image();
+    // Image is served from public/Warrior_Idle.png (reachable at /Warrior_Idle.png)
+    sprite.src = "/Warrior_Idle.png";
+
+    sprite.onload = () => {
+      const FRAME_W = 192;   // each frame width
+      const FRAME_H = 192;   // each frame height
+      const FRAME_COUNT = 8; // number of frames across
+      const FRAME_MS = 100;  // milliseconds per frame (10 fps)
+
+      const DEST_W = 32*12;     // draw size on canvas (width)
+      const DEST_H = 32*12;     // draw size on canvas (height)
+      const DX = 0;          // draw at origin (0,0)
+      const DY = 0;
+
+      ctx.imageSmoothingEnabled = false; // keep pixel art crisp
+
+      const draw = () => {
+        const frame = animRef.current.frame;
+        const sx = frame * FRAME_W;
+        const sy = 0;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(sprite, sx, sy, FRAME_W, FRAME_H, DX, DY, DEST_W, DEST_H);
+      };
+
+      const loop = (ts) => {
+        if (!animRef.current.last) animRef.current.last = ts;
+        const elapsed = ts - animRef.current.last;
+        if (elapsed >= FRAME_MS) {
+          animRef.current.frame = (animRef.current.frame + 1) % FRAME_COUNT;
+          animRef.current.last = ts;
+          draw();
+        }
+        animRef.current.req = requestAnimationFrame(loop);
+      };
+
+      // Draw first frame immediately, then start loop
+      draw();
+      animRef.current.req = requestAnimationFrame(loop);
+    };
+
+    sprite.onerror = (e) => {
+      console.error("Failed to load sprite", sprite.src, e);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = "16px sans-serif";
+      ctx.fillText(`Image failed to load: ${sprite.src}`, 10, 30);
+    };
+
+    return () => {
+      if (animRef.current.req) cancelAnimationFrame(animRef.current.req);
+    };
+  }, []);
+
+  
+
   return (
     <div
       style={{
@@ -192,7 +258,7 @@ const GamePage = () => {
           </div>
           <div style={{ marginBottom: "10px", fontWeight: "bold" }}>You</div>
           <div style={{ fontSize: "1.2rem", marginBottom: "20px" }}>{renderHearts(playerHearts)}</div>
-          <div style={{ fontSize: "80px" }}>🧑‍💻</div>
+          <div style={{ fontSize: "80px" }}><canvas style={{ border: "0px solid black", imageRendering: "pixelated" }} id="game" ref={canvasRef} width="400" height="400"></canvas></div>
         </div>
         <div style={{ textAlign: "center" }}>
           <div
