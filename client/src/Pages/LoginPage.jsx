@@ -94,6 +94,12 @@ const LoginPage = () => {
         <Button type="submit" variant="contained" style={{ backgroundColor: '#007bff' }}>
           Log In
         </Button>
+        <Button
+          onClick={() => navigate('/create-account')}
+          style={{ color: '#ccc', textTransform: 'none', marginTop: '10px' }}
+        >
+          Don’t have an account? Create one
+        </Button>
       </form>
     </div>
   );

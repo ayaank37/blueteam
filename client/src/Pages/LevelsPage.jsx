@@ -1,124 +1,143 @@
 import bgImage from "../assets/blue background.jpeg";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Typography, Grid, Box } from "@mui/material";
+import level1 from "../assets/Level1.avif";
+import level2 from "../assets/Level2.jpg";
+import level3 from "../assets/Level3.jpg";
+import level4 from "../assets/Level4.webp";
+import level5 from "../assets/Level5.png";
+import level6 from "../assets/Level6.gif";
+import level7 from "../assets/Level7.jpg";
+import level8 from "../assets/Level8.jpg";
 
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
-import { Typography } from "@mui/material";
-import level1 from"../assets/Level1.avif"
-import level2 from "../assets/Level2.jpg"
-import level3 from "../assets/Level3.jpg"
-import level4 from "../assets/Level4.webp"
-import level5 from "../assets/Level5.png"
-import level6 from "../assets/Level6.gif"
-import level7 from "../assets/Level7.jpg"
-import level8 from "../assets/Level8.jpg"
+const levels = [
+  { label: "Level 1", bg: "#FCA5A5", image: level1 },
+  { label: "Level 2", bg: "#FCD29A", image: level2 },
+  { label: "Level 3", bg: "#FDE68A", image: level3 },
+  { label: "Level 4", bg: "#BBF7D0", image: level4 },
+  { label: "Level 5", bg: "#FCA5A5", image: level5 },
+  { label: "Level 6", bg: "#FCD29A", image: level6 },
+  { label: "Level 7", bg: "#FDE68A", image: level7 },
+  { label: "Level 8", bg: "#BBF7D0", image: level8 },
+];
 
+const LevelsPage = () => {
+  const navigate = useNavigate();
+  const unlocked = Number(localStorage.getItem("unlockedLevels") || "1");
 
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: (theme.vars ?? theme).palette.text.secondary,
-  ...theme.applyStyles('dark', {
-    backgroundColor: '#1A2027',
-  }),
-}));
-
-
-export default function LevelsPage({ columns = 4 }) {
-  const pageStyle = {
-    maxWidth: "800px",
-    margin: "0 auto",
-    padding: "20px 0",
-    fontFamily: "Arial, sans-serif",
-   
+  const handleClick = (levelIndex) => {
+    if (levelIndex + 1 <= unlocked) {
+      navigate(`/game/${levelIndex + 1}`);
+    }
   };
-
-  const headerStyle = {
-    backgroundColor: "#d1d5db", 
-    padding: "20px 0",
-    textAlign: "center",
-    borderRadius: "4px",
-    height: "100px",
-    width: "2060px"
-  };
-
-  const headerText = {
-    margin: 0,
-    fontSize: "2.5rem",
-    color: "#ffffff",
-  };
-
-  const boxBase = {
-    height: "400px",
-    width: "450px",
-    borderRadius: "24px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "1.25rem",
-    fontWeight: 500,
-    color: "#000000",
-  };
-
-  // Color definitions for each level
-  const levels = [
-    { label: "Level 1", bg: "#FCA5A5", bgImage:level1 },
-    { label: "Level 2", bg: "#FCD29A", bgImage:level2},
-    { label: "Level 3", bg: "#FDE68A", bgImage:level3},
-    { label: "Level 4", bg: "#BBF7D0", bgImage:level4 },
-    { label: "Level 5", bg: "#FCA5A5", bgImage:level5},
-    { label: "Level 6", bg: "#FCD29A", bgImage:level6},
-    { label: "Level 7", bg: "#FDE68A", bgImage:level7},
-    { label: "Level 8", bg: "#BBF7D0", bgImage:level8},
-  ];
 
   return (
-    <Container
-      maxWidth={false}
-      disableGutters
+    <Box
       sx={{
-        backgroundColor: "#1a1a1a",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
+        backgroundColor: "#000000",
         minHeight: "100vh",
-        width: "100%",
-        m: 0,
-        p: 0
+        padding: "40px 20px",
+        margin: 0,
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       }}
     >
-      {/* Header Bar */}
-      <Typography variant="h1" gutterBottom align={"center"} color="white">
+      <Typography
+        variant="h1"
+        align="center"
+        sx={{
+          fontSize: "2.5rem",
+          color: "white",
+          mb: 4,
+          fontWeight: "bold",
+          fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        }}
+      >
         Levels
       </Typography>
 
       <Grid
         container
-        justifyContent="center" 
-        sx={{ padding: '60px', marginTop: '20px' }}
+        spacing={3}
+        justifyContent="center"
+        sx={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          flexWrap: "wrap",  // <-- Force wrapping
+          width: "100%",
+        }}
       >
-        {levels.map((level) => (
-          <Grid item size={3} xs={4} key={level.label} display={"flex"} flexDirection={"column"} paddingBottom={2} paddingTop={2}>
-            
-            <Typography color="whitesmoke" textAlign={"center"} fontSize={36}>{level.label} </Typography>
-            <Box
+        {levels.map((lvl, i) => {
+          const isLocked = i + 1 > unlocked;
+          return (
+            <Grid
+              item
+              key={lvl.label}
               sx={{
-                backgroundImage: `url(${level.bgImage})`,
-                ...boxBase,
-                backgroundColor: level.bg,
+                width: "calc(25% - 24px)",  // 4 items per row accounting for spacing
+                margin: "12px",
+                display: "flex",
               }}
+              onClick={() => handleClick(i)}
             >
-              
-            </Box>
-          </Grid>
-        ))}
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  height: "180px",
+                  backgroundImage: `url(${lvl.image})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  borderRadius: 4,
+                  opacity: isLocked ? 0.4 : 1,
+                  cursor: isLocked ? "not-allowed" : "pointer",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  p: 2,
+                  color: "black",
+                  fontWeight: "bold",
+                  fontSize: "1.4rem",
+                  textShadow: "2px 2px 6px white",
+                  border: `5px solid ${lvl.bg}`,
+                  userSelect: "none",
+                  fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                }}
+              >
+                <Typography
+                  sx={{
+                    bgcolor: lvl.bg,
+                    color: "black",
+                    p: 1,
+                    borderRadius: 1,
+                    textAlign: "center",
+                    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                  }}
+                >
+                  {lvl.label}
+                </Typography>
+                {isLocked && (
+                  <Typography
+                    sx={{
+                      color: "black",
+                      fontWeight: "bold",
+                      fontSize: "1.1rem",
+                      bgcolor: "#d9d9d9",
+                      p: 0.5,
+                      borderRadius: 1,
+                      textAlign: "center",
+                      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                    }}
+                  >
+                    Locked
+                  </Typography>
+                )}
+              </Box>
+            </Grid>
+          );
+        })}
       </Grid>
-    </Container>
+    </Box>
   );
-}
+};
+
+export default LevelsPage;
