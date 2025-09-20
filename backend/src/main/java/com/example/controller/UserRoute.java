@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserRoute {
 
     @Autowired
@@ -37,10 +38,13 @@ public class UserRoute {
                     .body("Username already exists");
         }
     }
-    @PostMapping("/login")
-public ResponseEntity<String> loginUser(@RequestBody User newUser) {
-    Optional<User> optionalUser = database.findByUsername(newUser.getUsername());
+   
+@PostMapping("/login")
+public ResponseEntity<String> loginUser(@RequestBody User loginRequest) {
+    // Step 1: Find the user in the database
+    Optional<User> optionalUser = database.findByUsername(loginRequest.getUsername());
 
+    // Step 2: Check if user exists
     if (optionalUser.isEmpty()) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("User not found");
@@ -48,13 +52,16 @@ public ResponseEntity<String> loginUser(@RequestBody User newUser) {
 
     User existingUser = optionalUser.get();
 
-    if (!existingUser.getPassword().equals(newUser.getPassword())) {
+    // Step 3: Validate the password
+    if (!existingUser.getPassword().equals(loginRequest.getPassword())) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body("Invalid password");
     }
 
+    // Step 4: (Optional) Return a token or success message
     return ResponseEntity.ok("Login successful");
 }
+
 
 
     // PUT /users/{username}
@@ -123,4 +130,6 @@ public ResponseEntity<String> loginUser(@RequestBody User newUser) {
         database.deleteAll(usersToDelete);
         return ResponseEntity.ok("Deleted " + usersToDelete.size() + " duplicate user(s)");
     }
+    
+
 }
