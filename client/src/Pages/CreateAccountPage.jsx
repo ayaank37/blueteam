@@ -2,28 +2,31 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const CreateAccountPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleCreateAccount = (e) => {
+  const handleCreateAccount = async (e) => {
     e.preventDefault();
 
-    // Check if user already exists
-    const existingUsers = JSON.parse(localStorage.getItem('users')) || {};
-    if (existingUsers[username]) {
-      alert('Username already exists. Please choose another.');
-      return;
+    try {
+      const response = await axios.post('http://localhost:8080/users', {
+        username,
+        password,
+      });
+      alert('Account created! You can now log in.');
+      navigate('/login');
+    } catch (error) {
+      if (error.response?.status === 409) {
+        alert('Username already exists. Please choose another.');
+      } else {
+        alert('Failed to create account. Please try again later.');
+        console.error(error);
+      }
     }
-
-    // Save user
-    existingUsers[username] = password;
-    localStorage.setItem('users', JSON.stringify(existingUsers));
-
-    alert('Account created! You can now log in.');
-    navigate('/login');
   };
 
   return (
