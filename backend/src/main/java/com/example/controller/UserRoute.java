@@ -42,13 +42,13 @@ public class UserRoute {
 @PostMapping("/login")
 public ResponseEntity<String> loginUser(@RequestBody User loginRequest) {
     // Step 1: Find the user in the database
-    Optional<User> optionalUser = database.findByUsername(loginRequest.getUsername());
+    System.out.println("Login attempt for user: " + loginRequest.getUsername());
 
-    // Step 2: Check if user exists
-    if (optionalUser.isEmpty()) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("User not found");
-    }
+        Optional<User> optionalUser = database.findByUsername(loginRequest.getUsername());
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("User not found");
+        }
 
     User existingUser = optionalUser.get();
 

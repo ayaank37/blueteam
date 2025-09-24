@@ -8,32 +8,27 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const loginUser = async () => {
-      try {
-        const response = await axios.post('http://localhost:8000/login', {
-          username,
-          password,
-        });
+    try {
+      const response = await axios.post('http://localhost:8080/users/login', {
+        username,
+        password,
+      });
 
-        console.log('Login successful:', response.data);
+      console.log('Login successful:', response.data);
 
-        // Store token if returned (optional)
-        // localStorage.setItem('token', response.data.token);
+      // Optionally store auth token
+      // localStorage.setItem('token', response.data.token);
 
-        alert(`Logged in as ${username}`);
-        navigate('/');
-      } catch (error) {
-        console.error('Login failed:', error.response?.data || error.message);
-        alert('Login failed. Please check your credentials.');
-      }
-    };
-
-    loginUser();
+      alert(`Logged in as ${username}`);
+      navigate('/');
+    } catch (error) {
+      console.error('Login failed:', error.response?.data || error.message);
+      alert('Login failed. Please check your credentials.');
+    }
   };
-
   return (
     <div
       style={{
