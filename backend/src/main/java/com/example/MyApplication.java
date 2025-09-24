@@ -17,18 +17,20 @@ public class MyApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MyApplication.class, args);
 	}
+	
 	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:8080")
-						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-						.allowedHeaders("*");
-			}
-		};
-	}
+public WebMvcConfigurer corsConfigurer() {
+  return new WebMvcConfigurer() {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+      registry.addMapping("/**")
+              .allowedOrigins("http://localhost:3000")
+              .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+              .allowedHeaders("*");
+    }
+  };
+}
+
 	@Component
 	class Runner implements CommandLineRunner {
 		private final MongoTemplate mongo;
