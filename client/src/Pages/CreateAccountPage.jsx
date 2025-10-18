@@ -13,7 +13,7 @@ const CreateAccountPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8080/users', {
+      const response = await axios.post('https://blueteam-2ia8.onrender.com/users', {
         username,
         password,
       });
