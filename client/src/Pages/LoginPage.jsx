@@ -17,19 +17,17 @@ const LoginPage = () => {
         password,
       });
       
-      //const response = await axios.post('/api/users/login', {
-      //  username,
-      //  password,
-      //});
-      
 
       console.log('Login successful:', response.data);
 
-      // Optionally store auth token
-      // localStorage.setItem('token', response.data.token);
+
 
       alert(`Logged in as ${username}`);
       navigate('/');
+      localStorage.clear()
+      localStorage.setItem("unlockedLevels", "1");
+     // localStorage.setItem("unlockedLevels", response.data.level);
+      localStorage.setItem("level", response.data.gamebucks);
     } catch (error) {
       console.error('Login failed:', error.response?.data || error.message);
       alert('Login failed. Please check your credentials.');
