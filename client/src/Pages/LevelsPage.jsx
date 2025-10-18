@@ -1,7 +1,8 @@
-import bgImage from "../assets/blue background.jpeg";
+//import bgImage from "../assets/blue background.jpeg";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Typography, Grid, Box } from "@mui/material";
+//import axios from 'axios';
 import level1 from "../assets/Level1.avif";
 import level2 from "../assets/Level2.jpg";
 import level3 from "../assets/Level3.jpg";
@@ -31,7 +32,7 @@ const LevelsPage = () => {
       navigate(`/game/${levelIndex + 1}`);
     }
   };
-
+// find what variables r in localstorage and set them properly (login = level to unlocked levels)
   return (
     <Box
       sx={{

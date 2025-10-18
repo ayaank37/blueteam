@@ -23,6 +23,7 @@ public class UserRoute {
         return database.findAll();
     }
 
+
     // POST /users
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody User newUser) {
@@ -40,14 +41,14 @@ public class UserRoute {
     }
    
 @PostMapping("/login")
-public ResponseEntity<String> loginUser(@RequestBody User loginRequest) {
+public ResponseEntity<User> loginUser(@RequestBody User loginRequest) {
     // Step 1: Find the user in the database
     System.out.println("Login attempt for user: " + loginRequest.getUsername());
 
         Optional<User> optionalUser = database.findByUsername(loginRequest.getUsername());
         if (optionalUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("User not found");
+                    .body(null);
         }
 
     User existingUser = optionalUser.get();
@@ -55,11 +56,11 @@ public ResponseEntity<String> loginUser(@RequestBody User loginRequest) {
     // Step 3: Validate the password
     if (!existingUser.getPassword().equals(loginRequest.getPassword())) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body("Invalid password");
+                .body(null);
     }
 
     // Step 4: (Optional) Return a token or success message
-    return ResponseEntity.ok("Login successful");
+    return ResponseEntity.ok(existingUser);
 }
 
 
@@ -83,6 +84,7 @@ public ResponseEntity<String> loginUser(@RequestBody User loginRequest) {
         Optional<User> optionalUser = database.findByUsername(username);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
+            System.out.println(user.getLevel());
             user.increaseLevel();  // assumes you have this method
             return ResponseEntity.ok(database.save(user));
         } else {
