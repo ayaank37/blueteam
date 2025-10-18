@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class UserRoute {
 
     @Autowired

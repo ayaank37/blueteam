@@ -12,7 +12,7 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8080/users/login', {
+      const response = await axios.post('https://blueteam-2ia8.onrender.com/users/login', {
         username,
         password,
       });
