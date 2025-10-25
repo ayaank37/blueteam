@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: blueteam-backend
+    env: java
+    buildCommand: mvn clean package -DskipTests
+    startCommand: java -jar target/myproject-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: JAVA_VERSION
+        value: 17
