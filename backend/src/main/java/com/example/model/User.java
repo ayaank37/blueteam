@@ -14,7 +14,7 @@ public class User {
    private String username;
 
    private String password;
-   private Integer level = 0;
+   private Integer level = 1;
    private Integer gamebucks = 0;
 
    public User() {}

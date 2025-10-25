@@ -21,13 +21,13 @@ const LoginPage = () => {
       console.log('Login successful:', response.data);
 
 
-
-      alert(`Logged in as ${username}`);
+        //alert(`Logged in as ${JSON.stringify(response.data,null,2)}`);
+        alert(`Logged in as ${username}`);
+      localStorage.setItem("currentUser", username);
+      localStorage.setItem(`${username}_loginSuccess`, "true");
+      localStorage.setItem(`${username}_unlockedLevels`, response.data.level);
+      localStorage.setItem(`${username}_gameBucks`, response.data.gamebucks);
       navigate('/');
-      localStorage.clear()
-      localStorage.setItem("unlockedLevels", "1");
-     // localStorage.setItem("unlockedLevels", response.data.level);
-      localStorage.setItem("level", response.data.gamebucks);
     } catch (error) {
       console.error('Login failed:', error.response?.data || error.message);
       alert('Login failed. Please check your credentials.');

@@ -37,9 +37,40 @@ function App() {
               boxSizing: "border-box",
               flexShrink: 0,
             }}
-          >
-            {["/", "/levels", "/rewards", "/account"].map((path, i) => {
-              const labels = ["Home", "Levels", "Rewards", "Account"];
+            >
+              {["/", "/levels", "/rewards", "/account", "/login"].map((path, i) => {
+                const currentUser = localStorage.getItem("currentUser");
+                const loggedIn = currentUser && localStorage.getItem(`${currentUser}_loginSuccess`) === "true";
+
+                const labels = ["Home", "Levels", "Rewards", "Account", loggedIn ? "Logout" : "Login"];
+                const isLogout = labels[i] === "Logout";
+
+                if (isLogout) {
+                // Use <a> for logout to allow full page reload
+                return (
+                  <a
+                    key={path}
+                    href="#"
+                    style={{
+                    color: "white",
+                    textDecoration: "none",
+                    fontSize: "20px",
+                    fontWeight: "500",
+                    cursor: "pointer",
+                  }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (currentUser) {
+                      localStorage.removeItem(`${currentUser}_loginSuccess`);
+                      localStorage.removeItem("currentUser"); // optional
+                      window.location.href = "/login"; // full reload
+                    }
+                  }}
+                >
+                  {labels[i]}
+                </a>
+              );
+            } else {
               return (
                 <Link
                   key={path}
@@ -54,9 +85,9 @@ function App() {
                   {labels[i]}
                 </Link>
               );
-            })}
-          </nav>
-
+            }
+          })}
+        </nav>
           <div
             style={{
               flex: 1,

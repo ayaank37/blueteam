@@ -25,14 +25,29 @@ const levels = [
 
 const LevelsPage = () => {
   const navigate = useNavigate();
-  const unlocked = Number(localStorage.getItem("unlockedLevels") || "1");
+  const currentUser = localStorage.getItem("currentUser");
+
+  // Default to level 1 if user has no progress yet
+  const unlocked = parseInt(localStorage.getItem(`${currentUser}_unlockedLevels`)) || 1;
 
   const handleClick = (levelIndex) => {
     if (levelIndex + 1 <= unlocked) {
       navigate(`/game/${levelIndex + 1}`);
     }
   };
-// find what variables r in localstorage and set them properly (login = level to unlocked levels)
+
+  // Call this function when a level is completed
+  const completeLevel = (levelNumber) => {
+    const currentUnlocked = parseInt(localStorage.getItem(`${currentUser}_unlockedLevels`)) || 1;
+    const nextLevel = levelNumber + 1;
+
+    // Unlock next level only if it's higher than current unlocked
+    if (nextLevel > currentUnlocked && nextLevel <= levels.length) {
+      localStorage.setItem(`${currentUser}_unlockedLevels`, nextLevel);
+    }
+  };
+
+  // find what variables r in localstorage and set them properly (login = level to unlocked levels)
   return (
     <Box
       sx={{
@@ -64,7 +79,7 @@ const LevelsPage = () => {
         sx={{
           maxWidth: "1200px",
           margin: "0 auto",
-          flexWrap: "wrap",  // <-- Force wrapping
+          flexWrap: "wrap", // <-- Force wrapping
           width: "100%",
         }}
       >
@@ -75,7 +90,7 @@ const LevelsPage = () => {
               item
               key={lvl.label}
               sx={{
-                width: "calc(25% - 24px)",  // 4 items per row accounting for spacing
+                width: "calc(25% - 24px)", // 4 items per row accounting for spacing
                 margin: "12px",
                 display: "flex",
               }}
